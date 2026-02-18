@@ -6,47 +6,83 @@ import { useSelector } from "react-redux";
 
 export const Header = () => {
   const [btnName, setBtnName] = useState("Login");
-  const {userLogin} = useContext(UseContext)
-  const onlineStatus = useOnlineStatus();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const cartItems = useSelector((store)=>store.cart.items)
-  // console.log("cart ke items",cartItems);
-  
+  const { userLogin } = useContext(UseContext);
+  const onlineStatus = useOnlineStatus();
+  const cartItems = useSelector((store) => store.cart.items);
 
   return (
-    <div className="header flex justify-between bg-gray-800 items-center text-white w-full h-fit">
-      <div className="logo-container w-[40%]  flex items-center p-2">
-        <img
-          className="logo w-[10%] h-[5%]"
-          src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
-          alt="logo"
-        />
-      </div>
+    <div className="bg-gray-800 text-white w-full">
+      <div className="flex justify-between items-center px-4 py-3 md:px-8">
+        
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <img
+            className="w-12 md:w-16"
+            src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png"
+            alt="logo"
+          />
+          <h1 className="font-bold text-lg hidden sm:block">Food App</h1>
+        </div>
 
-    
-       <div>    
-        <ul className="flex gap-4 pr-4">
+        {/* Hamburger */}
+        <div
+          className="md:hidden text-2xl cursor-pointer"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          ☰
+        </div>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex gap-6 items-center">
           <li>{onlineStatus ? "🟢 Online" : "🔴 Offline"}</li>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About Us</Link></li>
+          <li><Link to="/about">About</Link></li>
           <li><Link to="/grocery">Grocery</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
-          <li> <Link to="/cart">Cart: {cartItems.length}</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/cart">Cart: {cartItems.length}</Link></li>
+
           <button
-            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 active:bg-blue-800 transition duration-200"
-            onClick={() => {
-              btnName === "Login" ? setBtnName("Logout") : setBtnName("Login");
-            }}
+            className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
+            onClick={() =>
+              btnName === "Login"
+                ? setBtnName("Logout")
+                : setBtnName("Login")
+            }
           >
             {btnName}
           </button>
-          <button>
-            {userLogin} 
-          </button>
-        </ul>
-        </div>
 
-     
+          <li className="font-semibold">{userLogin}</li>
+        </ul>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <ul className="md:hidden flex flex-col gap-4 px-4 pb-4 bg-gray-700">
+          <li>{onlineStatus ? "🟢 Online" : "🔴 Offline"}</li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/grocery">Grocery</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/cart">Cart: {cartItems.length}</Link></li>
+
+          <button
+            className="px-4 py-2 bg-blue-600 rounded"
+            onClick={() =>
+              btnName === "Login"
+                ? setBtnName("Logout")
+                : setBtnName("Login")
+            }
+          >
+            {btnName}
+          </button>
+
+          <li className="font-semibold">{userLogin}</li>
+        </ul>
+      )}
     </div>
   );
 };
+9

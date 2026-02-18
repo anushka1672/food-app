@@ -2,17 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RestaurantCards = ({ ResData }) => {
-  // console.log(ResData);
-
   return (
-    <div className="flex flex-wrap gap-4 justify-center mt-2">
+    <div
+      className="
+        grid grid-rows-2 grid-flow-col 
+        auto-cols-[160px] gap-4 
+        overflow-x-auto p-3
+        
+        md:grid-flow-row 
+        md:grid-cols-3 
+        lg:grid-cols-4 
+        md:auto-cols-auto 
+        md:overflow-visible
+      "
+    >
       {ResData.map((item) => (
         <Link to={`/restaurant/${item.info.id}`} key={item.info.id}>
           <div
-            key={item.info.id}
-            className="bg-white border rounded-lg overflow-hidden hover:scale-105 transition duration-150 cursor-pointer w-52"
+            className="
+              bg-white border rounded-xl overflow-hidden
+              shadow-sm hover:scale-105 transition
+            "
           >
-            <div className="h-36 w-full overflow-hidden">
+            {/* Image */}
+            <div className="h-32 w-full">
               <img
                 src={`https://media-assets.swiggy.com/swiggy/image/upload/${item.info.cloudinaryImageId}`}
                 alt={item.info.name}
@@ -21,7 +34,7 @@ const RestaurantCards = ({ ResData }) => {
             </div>
 
             {/* Content */}
-            <div className="p-3 flex flex-col justify-between h-40">
+            <div className="p-2">
               <h3 className="font-semibold text-sm truncate">
                 {item.info.name}
               </h3>
@@ -30,12 +43,11 @@ const RestaurantCards = ({ ResData }) => {
                 {item.info.cuisines.join(", ")}
               </p>
 
-              <div className="flex items-center justify-between text-xs mt-2">
-                <span className="flex items-center gap-1 font-medium text-green-600">
+              <div className="flex justify-between text-xs mt-1">
+                <span className="text-green-600">
                   ⭐ {item.info.avgRating}
                 </span>
-
-                <span className="text-gray-700">{item.info.costForTwo}</span>
+                <span>{item.info.costForTwo}</span>
               </div>
             </div>
           </div>
